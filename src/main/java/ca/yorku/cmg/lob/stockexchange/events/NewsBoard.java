@@ -10,23 +10,22 @@ import java.util.Set;
 
 import ca.yorku.cmg.lob.security.Security;
 import ca.yorku.cmg.lob.security.SecurityList;
-import ca.yorku.cmg.lob.stockexchange.tradingagent.INewsObserver;
+
 /**
  * A NewsBoard object generates and shares financial/economic events that affect specific securities 
  */
-public class NewsBoard extends Subject {
+public class NewsBoard {
 
 	//Events are queued ordered by time
 	PriorityQueue<Event> eventQueue = new PriorityQueue<>((e1, e2) -> Long.compare(e1.getTime(), e2.getTime()));
-	private Event currentEvent;
+
 	SecurityList securities;
 	
 	public NewsBoard(SecurityList x) {
 		this.securities = x;
 	}
-
-
-	// Allowed event values
+	
+    // Allowed event values
     private static final Set<String> VALID_EVENTS = new HashSet<>(
 	        Arrays.asList("Good", "Bad")
     );
@@ -111,22 +110,13 @@ public class NewsBoard extends Subject {
 		}
 		return (e);
 	}
-
-
-	 /** Stub for the observer part. Runs the entire queue of events and sends notifications to registered trading agents.
+	
+	
+	/**
+	 * Stub for the observer part. Runs the entire queue of events and sends notifications to registered trading agents.   
 	 */
-
-	public void setCurrentEvent(Event e) {
-		this.currentEvent = e;
-		notifyObservers(e);
-	}
-
 	public void runEventsList() {
-		PriorityQueue<Event> clonedQueue = new PriorityQueue<>(eventQueue);
-		while (!clonedQueue.isEmpty()) {
-			Event event = clonedQueue.poll();
-			setCurrentEvent(event);
-		}
+
 	}
 	
 	
